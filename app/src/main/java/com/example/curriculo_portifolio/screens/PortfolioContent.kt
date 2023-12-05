@@ -18,11 +18,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Home
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -113,13 +120,18 @@ fun PortfolioContent() {
                     textAlign = TextAlign.Center)
             }
 
+            val context = LocalContext.current
+            val urllinkedin = "https://www.linkedin.com/in/eduarda-ap/"
+            val urlgithub = "https://github.com/EduardaPires"
+            val urlcv = "https://www.canva.com/design/DAFrtU06itg/tgM1j-pf2z_fezXdFK-sow/view?utm_content=DAFrtU06itg&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink"
+
             Row (   modifier = Modifier
                 .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center){
-               
+
                 IconButton(
                     onClick = {
-                        // Ação a ser executada quando o botão é clicado
+                        openUrlInBrowser(context, urllinkedin)
                     },
                     modifier = Modifier
                         .size(70.dp)
@@ -136,7 +148,7 @@ fun PortfolioContent() {
                 }
                 IconButton(
                     onClick = {
-                        // Ação a ser executada quando o botão é clicado
+                        openUrlInBrowser(context, urlgithub)
                     },
                     modifier = Modifier
                         .size(50.dp)
@@ -157,7 +169,7 @@ fun PortfolioContent() {
 
 
             Button(
-                onClick = { },
+                onClick = { openUrlInBrowser(context, urlcv) },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 30.dp, start = 5.dp)
@@ -165,10 +177,15 @@ fun PortfolioContent() {
                 contentPadding = PaddingValues(16.dp),
                 colors = ButtonDefaults.buttonColors(containerColor  = Color(0xFFEC9651), contentColor = Color.White)
             ) {
-                Text("Download CV")
+                Text("Acessar CV")
             }
         }
     }
+}
+
+fun openUrlInBrowser(context: android.content.Context, url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(intent)
 }
 
 
